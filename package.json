@@ -2,18 +2,35 @@
   "name": "astroplate",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "dev": "dotenv -- turbo run dev --parallel",
+    "build": "dotenv -- turbo build",
+    "serve": "dotenv -- turbo serve",
+    "test": "turbo test",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md,astro}\"",
+    "generate:types": "dotenv -- pnpm --filter=api generate:types"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "typescript-config": "workspace:*",
+    "dotenv-cli": "latest",
     "prettier": "^3.2.5",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@8.9.0",
+  "peerDependenciesMeta": {
+    "express": {
+      "optional": true
+    }
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "express"
+      ]
+    }
+  },
+  "preinstall": "npx only-allow pnpm",
   "engines": {
     "node": ">=18"
   }

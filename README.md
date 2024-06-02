@@ -1,43 +1,36 @@
-# Turborepo starter
+# AstroStack (Astro, Payload CMS, and Tailwind CSS)
 
-This is an official starter Turborepo.
+Bundled together in a monorepo using [Turbo](https://turbo.build) and [pnpm](https://pnpm.io).
 
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
+```txt
+.github
+  └─ workflows
+        └─ CI with pnpm cache setup
+apps
+  ├─ web (Astro)
+  |   ├─ Astro v4
+  |   ├─ Tailwind CSS
+  |   └─ Payload CMS Local API
+  |─ cms (Payload CMS)
+  |   └─ Payload CMS v2
+  └─ server (Express)
+      ├─ Imports Astro as middleware
+      └─ Imports Payload CMS as middleware
 ```
 
-## What's inside?
+## Apps and Packages
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- `web`: [Astro](https://astro.build) app with [Tailwind CSS](https://tailwindcss.com)
+- `cms`: [Payload CMS](https://payloadcms.com)
+- `server`: [Express](https://expressjs.com) server
+- `eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`) [ESLint](https://eslint.org/), [Prettier](https://prettier.io)
+- `typescript-config`: `tsconfig.json`s used throughout the monorepo [TypeScript](https://www.typescriptlang.org/)de formatting
 
 ### Build
 
 To build all apps and packages, run the following command:
 
-```
-cd my-turborepo
+```bash
 pnpm build
 ```
 
@@ -45,28 +38,8 @@ pnpm build
 
 To develop all apps and packages, run the following command:
 
-```
-cd my-turborepo
+```bash
 pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
 ```
 
 ## Useful Links

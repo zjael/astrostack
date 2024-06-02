@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "ext": "ts",
+  "exec": "ts-node src/index.ts",
+  "watch": [
+    "./src",
+    "../web/src",
+    "../cms/src"
+  ]
+}

@@ -1,10 +1,18 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": ["**/.env"],
+  "globalEnv": [
+    "NODE_ENV",
+    "PORT",
+    "DATABASE_URI",
+    "PAYLOADCMS_SECRET",
+    "PAYLOAD_CONFIG_PATH"
+  ],
   "pipeline": {
     "build": {
+      "cache": false,
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", "build/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]

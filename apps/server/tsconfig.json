@@ -1,0 +1,11 @@
+{
+  "extends": "typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "."
+  },
+  "ts-node": {
+    "transpileOnly": true
+  },
+  "include": ["src/**/*"]
+}
