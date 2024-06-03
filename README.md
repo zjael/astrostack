@@ -42,6 +42,14 @@ To develop all apps and packages, run the following command:
 pnpm dev
 ```
 
+### Deploy
+
+When deploying, you can use the `--conditions` flag to serve the compiled `dist` directory.
+
+```bash
+node --conditions=serve dist/index.js
+```
+
 ## Useful Links
 
 Learn more about the power of Turborepo:

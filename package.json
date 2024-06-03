@@ -12,11 +12,11 @@
     "generate:types": "dotenv -- pnpm --filter=api generate:types"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "typescript-config": "workspace:*",
     "dotenv-cli": "latest",
-    "prettier": "^3.2.5",
-    "turbo": "latest"
+    "eslint-config": "workspace:*",
+    "prettier": "^3.3.0",
+    "turbo": "latest",
+    "typescript-config": "workspace:*"
   },
   "peerDependenciesMeta": {
     "express": {

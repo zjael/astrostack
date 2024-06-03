@@ -1,5 +1,4 @@
 import path = require('path');
-import fs = require('fs');
 import express = require('express');
 import cms = require('cms');
 
@@ -8,9 +7,8 @@ if(!process.env.DATABASE_URI || !process.env.PAYLOAD_SECRET) {
   process.exit(1);
 };
 
-const WEB_PUBLIC_DIR = path.join(process.cwd(), './build/client');
-
 const PORT = process.env.PORT || 3000;
+const WEB_PUBLIC_DIR = path.join(process.cwd(), './build/client');
 
 const { payload } = cms;
 const app = express();
@@ -21,17 +19,18 @@ app.get('/healthcheck', (req, res) => res.send('OK'));
 app.use('/', express.static(WEB_PUBLIC_DIR));
 
 (async () => {
-  // @ts-ignore
-  const { handler } = await import('../build/server/entry.mjs');
-  app.use(handler);
-
   await payload.init({
     express: app,
     secret: process.env.PAYLOAD_SECRET as string,
     onInit: () => {
+      payload.logger.info(`API URL: ${payload.getAPIURL()}`);
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
     },
   });
+
+  // @ts-ignore
+  const { handler } = await import('../build/server/entry.mjs');
+  app.use(handler);
 
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)

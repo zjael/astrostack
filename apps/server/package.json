@@ -6,6 +6,7 @@
     "dev": "cross-env PAYLOAD_CONFIG_PATH=../cms/src/payload.config.ts NODE_ENV=development nodemon",
     "build:server": "rm -rf dist/* && tsc",
     "build": "pnpm build:server",
+    "serve": "node --conditions=serve dist/index.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --quiet",
     "test": "ts-node ./src/index.ts"
