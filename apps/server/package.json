@@ -1,9 +1,9 @@
 {
   "name": "server",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
-    "clean": "rm -rf node_modules build dist .turbo",
-    "dev": "cross-env PAYLOAD_CONFIG_PATH=../cms/src/payload.config.ts NODE_ENV=development nodemon",
+    "dev": "NODE_ENV=development nodemon",
     "build:server": "rm -rf dist/* && tsc",
     "build": "pnpm build:server",
     "serve": "node --conditions=serve dist/index.js",
@@ -14,15 +14,19 @@
   "dependencies": {
     "cms": "workspace:*",
     "express": "^4.19.2",
+    "next": "15.0.0-rc.0",
     "web": "workspace:*"
   },
   "devDependencies": {
-    "typescript-config": "workspace:*",
     "@types/express": "^4.17.21",
-    "@types/node": "^20.10.3",
+    "@types/node": "^20.14.2",
     "cross-env": "^7.0.3",
     "nodemon": "^3.1.2",
-    "ts-node": "^9.1.1",
-    "typescript": "^5.3.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "typescript-config": "workspace:*"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.6.0"
   }
 }

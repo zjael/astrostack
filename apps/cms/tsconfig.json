@@ -1,10 +1,36 @@
 {
   "extends": "typescript-config/base.json",
   "compilerOptions": {
-    "outDir": "./dist",
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "outDir": "dist",
     "paths": {
-      "payload/generated-types": ["./src/payload-types.ts"]
-    }
+      "@/*": [
+        "./src/*"
+      ],
+      "@payload-config": [
+        "./src/payload.config.ts"
+      ],
+      "payload/generated-types": [
+        "./src/payload-types.ts"
+      ]
+    },
+    "allowJs": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src/**/*"]
+  "ts-node": {
+    "esm": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ]
 }

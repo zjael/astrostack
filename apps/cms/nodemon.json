@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "exec": "pnpm run generate:types",
+  "watch": [
+    "./src/collections"
+  ]
+}

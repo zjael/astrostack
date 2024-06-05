@@ -1,33 +1,37 @@
 import path from 'path'
+import { fileURLToPath } from 'url';
 import { Payload } from 'payload';
-import { payloadCloud } from '@payloadcms/plugin-cloud'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { viteBundler } from '@payloadcms/bundler-vite';
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
+import sharp from 'sharp'
 
 import Users from './collections/Users'
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
     user: Users.slug,
-    bundler: viteBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users],
+  collections: [
+    Users,
+  ],
+  secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
-    outputFile: path.resolve(__dirname, 'payload-types.ts'),
+    outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
-  },
-  plugins: [payloadCloud()],
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI,
-    },
+      connectionString: process.env.DATABASE_URI || ''
+    }
   }),
-  onInit: async (payload: Payload) => {
-
+  plugins: [],
+  sharp: sharp,
+  async onInit(payload: Payload) {
+    payload.logger.info(`API URL: ${payload.getAPIURL()}`);
+    payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
   },
 })

@@ -1,38 +1,41 @@
-import path = require('path');
-import express = require('express');
-import cms = require('cms');
+import url from 'url';
+import path from 'path';
+import express from 'express';
+import next from 'next';
 
-if(!process.env.DATABASE_URI || !process.env.PAYLOAD_SECRET) {
-  console.error('DATABASE_URI and PAYLOAD_SECRET environment variables are required');
-  process.exit(1);
-};
+const dev = process.env.NODE_ENV !== 'production';
+const port = process.env.PORT || 3000;
 
-const PORT = process.env.PORT || 3000;
-const WEB_PUBLIC_DIR = path.join(process.cwd(), './build/client');
+const filename = url.fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
-const { payload } = cms;
+const webPublicDir = path.join(dirname, '../../web/dist/client');
+const webServerDir = path.join(dirname, '../../web/dist/server');
+const cmsDir = path.join(dirname, '../../cms');
+
 const app = express();
-
-app.disable('x-powered-by');
-
-app.get('/healthcheck', (req, res) => res.send('OK'));
-app.use('/', express.static(WEB_PUBLIC_DIR));
+const nextApp = next({
+  dev: dev,
+  dir: cmsDir
+});
+const nextHandler = nextApp.getRequestHandler();
 
 (async () => {
-  await payload.init({
-    express: app,
-    secret: process.env.PAYLOAD_SECRET as string,
-    onInit: () => {
-      payload.logger.info(`API URL: ${payload.getAPIURL()}`);
-      payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
-    },
-  });
+  await nextApp.prepare();
+  app.use('/', express.static(webPublicDir)), {
+    maxAge: dev ? '0' : '365d'
+  };
 
   // @ts-ignore
-  const { handler } = await import('../build/server/entry.mjs');
+  const { handler } = await import(path.join(webServerDir, 'entry.mjs'));
   app.use(handler);
 
-  app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`)
+  app.get('*', (req, res) => {
+    const parsedUrl = url.parse(req.url, true);
+    nextHandler(req, res, parsedUrl);
+  });
+
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`)
   });
 })();

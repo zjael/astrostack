@@ -24,11 +24,9 @@ RUN rm -rf ./**/*/src
 
 FROM base as runner
 ARG PORT=3000
-ARG PAYLOAD_CONFIG_PATH=/app/apps/cms/dist/payload.config.js
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=${PORT}
-ENV PAYLOAD_CONFIG_PATH=${PAYLOAD_CONFIG_PATH}
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nodejs
@@ -39,4 +37,4 @@ COPY --from=builder --chown=nodejs:nodejs /app .
 WORKDIR /app/apps/server
 EXPOSE ${PORT}
 
-CMD node --conditions=serve dist/index.js
+CMD node dist/index.js

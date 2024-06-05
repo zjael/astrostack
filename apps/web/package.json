@@ -6,9 +6,8 @@
     "astro": "astro",
     "start": "astro dev",
     "dev": "astro build --watch",
-    "build": "astro check && astro build && pnpm run copyfiles",
-    "preview": "astro preview",
-    "copyfiles": "copyfiles -u 1 \"dist/**/*\" ../server/build"
+    "build": "astro check && astro build",
+    "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
